@@ -9,36 +9,20 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   body {
     font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: transparent;
-    color: #111;
-    padding: 0;
-    margin: 0;
-    -webkit-font-smoothing: antialiased;
-    display: flex;
-    justify-content: center;
+    background: transparent; color: #111; padding: 0; margin: 0;
+    -webkit-font-smoothing: antialiased; display: flex; justify-content: center;
   }
-
   .card {
-    background: #fff;
-    border: 1px solid #e0ddd8;
-    border-radius: 14px;
-    width: 100%;
-    max-width: 1050px;
-    display: grid;
-    grid-template-columns: 38fr 62fr;
-    overflow: hidden;
+    background: #fff; border: 1px solid #e0ddd8; border-radius: 14px;
+    width: 100%; display: grid; grid-template-columns: 38fr 62fr; overflow: hidden;
   }
 
-  /* -- Left -- */
+  /* -- Left CTA -- */
   .card-left {
     padding: 3.5rem 2.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
+    display: flex; flex-direction: column; justify-content: center; text-align: center;
   }
   .card-header { font-size: 2rem; font-weight: 700; color: #111; line-height: 1.3; margin: 0 0 1.5rem; }
   .pace { font-size: clamp(1rem, 4vw, 1.25rem); font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #111; margin: 0 0 2rem; }
@@ -46,7 +30,7 @@
     font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600;
     padding: 17px 32px; border-radius: 8px; cursor: pointer;
     border: 1.5px solid #1a1a1a; background: #1a1a1a; color: #fff;
-    letter-spacing: 0.01em; transition: all 0.15s ease; display: inline-block;
+    transition: all 0.15s ease; display: inline-block;
   }
   .copy-btn:hover { background: #333; border-color: #333; }
   .copy-btn.copied { border-color: #aaa; background: #aaa; }
@@ -55,178 +39,189 @@
   .trust-lead { font-size: 14px; font-weight: 700; color: #111; margin: 0 0 0.35rem; }
   .trust-detail { font-size: 13px; color: #777; line-height: 1.5; }
 
-  /* -- Right: scene -- */
+  /* -- Right scene -- */
   .card-right {
-    background: #f7f6f3;
+    background: #f5f4f1;
     border-left: 1px solid #e0ddd8;
-    padding: 32px 28px 28px;
     position: relative;
-    min-height: 480px;
+    min-height: 500px;
     overflow: hidden;
   }
 
-  /* Windows */
-  .win {
-    position: absolute;
-    border-radius: 10px;
-    overflow: hidden;
-  }
+  /* Shared window styles */
+  .win { position: absolute; border-radius: 10px; overflow: hidden; transition: z-index 0s; }
   .win-bar {
-    height: 28px;
-    display: flex; align-items: center;
+    height: 28px; display: flex; align-items: center;
     padding: 0 10px; gap: 5px;
   }
   .dot-r { width: 7px; height: 7px; border-radius: 50%; background: #ff5f57; }
   .dot-y { width: 7px; height: 7px; border-radius: 50%; background: #febc2e; }
   .dot-g { width: 7px; height: 7px; border-radius: 50%; background: #28c840; }
 
-  /* Back window: WIL site */
+  /* Site window */
   .win-site {
-    top: 20px; left: 20px;
-    width: 54%;
-    height: 70%;
-    background: #fff;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    z-index: 1;
+    top: 16px; left: 16px; width: 48%; height: 55%;
+    background: #fff; z-index: 3;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.08);
   }
+  .win-site.behind { z-index: 1; }
   .win-site .win-bar { background: #f5f5f4; border-bottom: 1px solid #eee; }
-  .site-body {
-    padding: 28px 22px;
-  }
+  .site-body { padding: 20px 16px; }
   .site-hero {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    color: #111;
-    line-height: 1.45;
-    margin-bottom: 20px;
+    font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 700;
+    color: #111; line-height: 1.45; margin-bottom: 16px;
   }
   .site-btn {
-    display: inline-block;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 9px; font-weight: 600;
-    padding: 8px 16px;
-    border-radius: 5px;
-    background: #1a1a1a;
-    color: #fff;
-    transition: background 0.2s ease;
+    display: inline-block; font-family: 'DM Sans', sans-serif;
+    font-size: 8px; font-weight: 600; padding: 7px 14px; border-radius: 5px;
+    background: #1a1a1a; color: #fff; transition: all 0.2s ease;
+    white-space: nowrap;
   }
-  .site-btn.flash { background: #666; }
+  .site-btn.copied-state { background: #444; font-size: 7px; }
 
-  /* Front window: AI chat */
+  /* Chat window */
   .win-chat {
-    bottom: 16px; right: 16px;
-    width: 68%;
-    height: 75%;
-    background: #f9f9f8;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.10);
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
+    bottom: 12px; right: 12px; width: 72%; height: 80%;
+    background: #fff; z-index: 2;
+    box-shadow: 0 10px 44px rgba(0,0,0,0.11);
+    display: flex; flex-direction: column;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
   }
-  .win-chat .win-bar { background: #f0efed; border-bottom: 1px solid #e8e7e4; }
+  .win-chat.show { opacity: 1; transform: translateY(0); z-index: 4; }
+  .win-chat .win-bar { background: #f5f4f2; border-bottom: 1px solid #eee; }
 
-  .chat-body {
+  /* Chat header title */
+  .chat-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 7px; font-weight: 500; color: #aaa;
+    margin-left: 8px;
+    transition: color 0.3s ease;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     flex: 1;
-    overflow: hidden;
-    position: relative;
-    padding: 14px 14px 0;
+  }
+  .chat-title.active { color: #666; }
+
+  /* LLM sidebar hint */
+  .chat-sidebar {
+    position: absolute; top: 28px; left: 0; bottom: 32px;
+    width: 5px; background: #eae9e6;
   }
 
-  .chat-input-bar {
-    height: 32px;
-    background: #fff;
-    border-top: 1px solid #eee;
-    display: flex; align-items: center;
-    padding: 0 12px;
-    flex-shrink: 0;
+  /* Chat body */
+  .chat-body {
+    flex: 1; overflow: hidden; position: relative;
+    padding: 12px 12px 0 16px;
   }
-  .chat-input-text { font-family: 'Inter', sans-serif; font-size: 9px; color: #ccc; }
+
+  /* Chat input */
+  .chat-input-bar {
+    height: 32px; flex-shrink: 0;
+    padding: 4px 10px;
+    display: flex; align-items: center;
+  }
+  .chat-input-field {
+    flex: 1; height: 24px;
+    background: #f5f4f2; border: 1px solid #e5e4e1; border-radius: 12px;
+    display: flex; align-items: center;
+    padding: 0 10px;
+  }
+  .chat-input-placeholder {
+    font-family: 'Inter', sans-serif; font-size: 8px; color: #ccc;
+  }
+
+  /* Cursor */
+  .cursor-el {
+    position: absolute; width: 14px; height: 18px;
+    z-index: 20; opacity: 0; pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .cursor-el.show { opacity: 1; }
+
+  /* Context menu */
+  .ctx-menu {
+    position: absolute; z-index: 25;
+    background: #fff; border: 1px solid #ddd; border-radius: 6px;
+    padding: 3px 0; opacity: 0; transform: scale(0.95);
+    transition: opacity 0.12s ease, transform 0.12s ease;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  }
+  .ctx-menu.show { opacity: 1; transform: scale(1); }
+  .ctx-item { font-family: 'Inter', sans-serif; font-size: 8px; padding: 3px 14px; color: #999; }
+  .ctx-item.hl { background: #2563eb; color: #fff; border-radius: 3px; margin: 0 3px; padding: 3px 11px; }
 
   /* User bubble */
   .user-bubble {
-    background: #1a1a1a;
-    color: rgba(255,255,255,0.85);
-    font-family: 'Inter', sans-serif;
-    font-size: 6px;
-    line-height: 1.6;
-    padding: 8px 10px;
-    border-radius: 8px 8px 2px 8px;
-    margin-left: 30%;
-    margin-bottom: 10px;
-    opacity: 0;
-    transform: translateY(6px);
+    background: #f0efed; color: #444;
+    font-family: 'Inter', sans-serif; font-size: 5.5px; line-height: 1.6;
+    padding: 7px 10px; border-radius: 8px;
+    margin-left: 24%; margin-bottom: 10px;
+    opacity: 0; transform: translateY(4px);
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
   .user-bubble.show { opacity: 1; transform: translateY(0); }
 
-  /* AI response area */
-  .ai-response {
+  /* Thinking line */
+  .think-line {
     font-family: 'Inter', sans-serif;
-    font-size: 6.5px;
-    line-height: 1.75;
-    color: #444;
+    font-size: 5.5px; line-height: 1.6;
+    color: #999; font-style: italic;
+    min-height: 12px;
+    margin-bottom: 8px;
     opacity: 0;
-    transition: opacity 0.3s ease;
-    position: relative;
+    transition: opacity 0.2s ease;
   }
-  .ai-response.show { opacity: 1; }
-
-  /* Typing cursor */
-  .gen-cursor {
-    display: inline-block;
-    width: 1px;
-    height: 8px;
-    background: #111;
-    margin-left: 1px;
-    vertical-align: text-bottom;
-    animation: blink 0.8s step-end infinite;
+  .think-line.show { opacity: 1; }
+  .think-cursor {
+    display: inline-block; width: 1px; height: 7px;
+    background: #999; margin-left: 1px; vertical-align: text-bottom;
+    animation: blink 0.7s step-end infinite;
   }
   @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-  /* Text blocks that appear one by one */
+  /* Generated report blocks */
   .gen-block {
-    opacity: 0;
-    transform: translateY(2px);
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    margin-bottom: 4px;
+    opacity: 0; transform: translateY(2px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    margin-bottom: 3px;
   }
   .gen-block.show { opacity: 1; transform: translateY(0); }
-
-  .gen-block.b-org { font-size: 5.5px; font-weight: 600; letter-spacing: 0.06em; color: #888; }
-  .gen-block.b-title { font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700; color: #111; }
-  .gen-block.b-meta { font-size: 5.5px; color: #888; }
-  .gen-block.b-hr { height: 1px; background: #eee; margin: 6px 0; }
-  .gen-block.b-h2 { font-family: 'DM Sans', sans-serif; font-size: 7.5px; font-weight: 700; color: #111; margin-top: 8px; }
-  .gen-block.b-rating { font-size: 5.5px; font-weight: 600; color: #e8643b; }
-  .gen-block.b-h3 { font-size: 6px; font-weight: 600; color: #222; margin-top: 5px; }
-  .gen-block.b-p { font-size: 5.5px; line-height: 1.7; color: #555; }
+  .gen-block.b-org { font-size: 5px; font-weight: 600; letter-spacing: 0.06em; color: #888; }
+  .gen-block.b-tagline { font-size: 4.5px; color: #aaa; font-style: italic; }
+  .gen-block.b-title { font-family: 'DM Sans', sans-serif; font-size: 8.5px; font-weight: 700; color: #111; margin-top: 2px; }
+  .gen-block.b-meta { font-size: 5px; color: #888; }
+  .gen-block.b-note { font-size: 4px; color: #aaa; font-style: italic; line-height: 1.5; margin-top: 3px; }
+  .gen-block.b-hr { height: 1px; background: #eee; margin: 5px 0; }
+  .gen-block.b-h2 { font-family: 'DM Sans', sans-serif; font-size: 7px; font-weight: 700; color: #111; margin-top: 6px; }
+  .gen-block.b-rating { font-size: 5px; font-weight: 600; color: #e8643b; }
+  .gen-block.b-h3 { font-size: 5.5px; font-weight: 600; color: #222; margin-top: 4px; }
+  .gen-block.b-p { font-size: 5px; line-height: 1.7; color: #555; }
+  .gen-cursor {
+    display: none; width: 1px; height: 7px;
+    background: #111; margin-left: 1px; vertical-align: text-bottom;
+    animation: blink 0.7s step-end infinite;
+  }
+  .gen-cursor.show { display: inline-block; }
 
   /* Hint */
   .scene-hint {
-    position: absolute;
-    bottom: 8px; right: 16px;
-    font-family: 'Inter', sans-serif;
-    font-size: 8px; color: #ccc;
-    z-index: 3; opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
+    position: absolute; bottom: 6px; right: 14px;
+    font-family: 'Inter', sans-serif; font-size: 8px; color: #ccc;
+    z-index: 5; opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
   }
   .card-right:hover .scene-hint { opacity: 1; }
 
-  /* Mobile */
   @media (max-width: 720px) {
     .card { grid-template-columns: 1fr; }
     .card-left { padding: 2.5rem 1.5rem; }
-    .card-right { border-left: none; border-top: 1px solid #e0ddd8; padding: 20px 16px; min-height: 400px; }
+    .card-right { border-left: none; border-top: 1px solid #e0ddd8; min-height: 420px; }
     .card-header { font-size: 1.5rem; }
-    .win-site { width: 52%; height: 65%; top: 12px; left: 12px; }
-    .win-chat { width: 72%; height: 70%; bottom: 10px; right: 10px; }
+    .win-site { width: 44%; height: 50%; }
+    .win-chat { width: 76%; height: 78%; }
   }
 </style>
 </head>
 <body>
-
 <div class="card">
   <div class="card-left">
     <p class="card-header">Your Co-Intelligence Readiness Report</p>
@@ -240,48 +235,62 @@
   </div>
 
   <div class="card-right">
-    <!-- Back window: WIL site -->
-    <div class="win win-site">
+    <!-- Cursor -->
+    <svg class="cursor-el" id="cursorEl" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1 1L1 14L4.5 10.5L8 17L10 16L6.5 9.5L11 9L1 1Z" fill="#111" stroke="#fff" stroke-width="0.8"/>
+    </svg>
+    <!-- Context menu -->
+    <div class="ctx-menu" id="ctxMenu">
+      <div class="ctx-item">Undo</div>
+      <div class="ctx-item hl">Paste</div>
+      <div class="ctx-item">Select All</div>
+    </div>
+
+    <!-- Site window -->
+    <div class="win win-site" id="winSite">
       <div class="win-bar"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
       <div class="site-body">
         <div class="site-hero">In the age of AI, love is the intelligence we've forgotten how to scale.</div>
-        <div class="site-btn" id="siteBtn">Copy prompt — paste into your AI</div>
+        <div class="site-btn" id="siteBtn">Copy prompt</div>
       </div>
     </div>
 
-    <!-- Front window: AI chat -->
-    <div class="win win-chat">
-      <div class="win-bar"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+    <!-- Chat window -->
+    <div class="win win-chat" id="winChat">
+      <div class="win-bar">
+        <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+        <span class="chat-title" id="chatTitle">New conversation</span>
+      </div>
+      <div class="chat-sidebar"></div>
       <div class="chat-body">
-        <div class="user-bubble" id="userBubble">You are conducting a Co-Intelligence Readiness Assessment (CIRA v5). Your task is to review my conversation history and produce an honest, evidence-based report...</div>
-        <div class="ai-response" id="aiResponse">
-          <div class="gen-block b-org" data-delay="0">WHAT IF LOVE</div>
-          <div class="gen-block b-meta" data-delay="120">A research lab for benevolent AI and Co-Intelligence</div>
-          <div class="gen-block b-title" data-delay="300">Co-Intelligence Readiness Assessment</div>
-          <div class="gen-block b-meta" data-delay="450">Prepared for: Wil Ko</div>
-          <div class="gen-block b-meta" data-delay="550">Assessment date: June 3, 2026</div>
-          <div class="gen-block b-hr" data-delay="700"></div>
-          <div class="gen-block b-h2" data-delay="850">Portrait</div>
-          <div class="gen-block b-p" data-delay="1000">Wil practices co-intelligence as a standards engineer. His deliverables are rarely the work itself — they are the instruments that encode the standard: the framework that names what to assess, the prompt that runs it, the bar system that calibrates the collaboration.</div>
-          <div class="gen-block b-p" data-delay="1400">An AI collaborator working with Wil would experience immediate altitude and explicit calibration. The bar is named before work begins — velocity, rarity, AI — and the floor is visible before the first exchange.</div>
-          <div class="gen-block b-hr" data-delay="1700"></div>
-          <div class="gen-block b-h2" data-delay="1850">Domain 1 — Benevolent Intent and Moral Anchoring</div>
-          <div class="gen-block b-rating" data-delay="2000">Rating: Highly Effective · Confidence: High</div>
-          <div class="gen-block b-h3" data-delay="2100">1a — What You're Creating, and Who's It For</div>
-          <div class="gen-block b-p" data-delay="2250">Evidence for H here is structural, not declarative. The populations served are named and specific: students in temporary housing receiving SMS-based pedagogy, Title I students measured against their lowest-performing subgroup cohort.</div>
-          <div class="gen-block b-hr" data-delay="2600"></div>
-          <div class="gen-block b-h2" data-delay="2750">Domain 2 — Planning and Scope</div>
-          <div class="gen-block b-rating" data-delay="2850">Rating: Effective · Confidence: High</div>
-          <div class="gen-block b-p" data-delay="2950">The session re-introduction protocol demonstrates that Wil knows what done looks like before entering a session. The CIRA versioning history shows structured development with explicit changelog reasoning.</div>
-          <div class="gen-block b-hr" data-delay="3250"></div>
-          <div class="gen-block b-h2" data-delay="3400">Domain 3 — Agency, Judgment, and Steering</div>
-          <div class="gen-block b-rating" data-delay="3500">Rating: Highly Effective · Confidence: High</div>
-          <div class="gen-block b-h3" data-delay="3600">3a — The Third Turn</div>
-          <div class="gen-block b-p" data-delay="3750">The pattern is consistent across the record and demonstrates H: the third turn regularly resets the trajectory of the work rather than revising within the existing frame. The model-confidence conversation is the clearest example: the third turn produced the correct mechanism after the model had offered only the wrong mechanism.<span class="gen-cursor" id="genCursor"></span></div>
+        <div class="user-bubble" id="userBubble">You are conducting a Co-Intelligence Readiness Assessment (CIRA v5). Your task is to review my conversation history and produce an honest, evidence-based report scored against the Co-Intelligence Readiness Framework v5. This is not a personality test. It is an assessment of practice...</div>
+        <div class="think-line" id="thinkLine"><span id="thinkText"></span><span class="think-cursor" id="thinkCursor"></span></div>
+        <div id="reportArea">
+          <div class="gen-block b-org" data-d="0">WHAT IF LOVE</div>
+          <div class="gen-block b-tagline" data-d="100">A research lab for benevolent AI and Co-Intelligence</div>
+          <div class="gen-block b-title" data-d="250">Co-Intelligence Readiness Assessment</div>
+          <div class="gen-block b-meta" data-d="380">Prepared for: Asa</div>
+          <div class="gen-block b-meta" data-d="460">Assessment date: June 3, 2026</div>
+          <div class="gen-block b-note" data-d="560">This report was generated by reviewing approximately 80 of the user's past exchanges with Claude spanning July 2025 through June 2026, scored against the Co-Intelligence Readiness Framework, designed at whatiflove.org.</div>
+          <div class="gen-block b-hr" data-d="700"></div>
+          <div class="gen-block b-h2" data-d="820">Portrait</div>
+          <div class="gen-block b-p" data-d="950">Asa practices co-intelligence as a developing practitioner with strong instincts for when the model is drifting. His deliverables show increasing independence across the record, with a visible shift from accepting model framing in early sessions to active redirection in later ones. The pattern is uneven but directional: when the work matters to him, steering is sharp; when the stakes feel lower, default acceptance returns.</div>
+          <div class="gen-block b-p" data-d="1350">An AI collaborator working with Asa would experience a practitioner whose engagement intensity varies with investment. High-stakes sessions produce focused, directive exchanges where the model is held to account. Lower-stakes sessions show a different pattern: longer acceptance runs, less pushback, and outputs that pass without the quality check the practitioner demonstrably knows how to apply.</div>
+          <div class="gen-block b-p" data-d="1750">The latent signal across the arc: the capacity is present before the consistency. Asa knows what good steering looks like because he does it when it matters. The question the record raises is whether the inconsistency is a resource allocation decision or a habit that will calcify if unnamed.</div>
+          <div class="gen-block b-hr" data-d="2100"></div>
+          <div class="gen-block b-h2" data-d="2220">Domain 1 — Benevolent Intent and Moral Anchoring</div>
+          <div class="gen-block b-rating" data-d="2340">Rating: Effective · Confidence: High</div>
+          <div class="gen-block b-h3" data-d="2440">1a — What You're Creating, and Who's It For</div>
+          <div class="gen-block b-p" data-d="2560">Purpose is stated and connects to identifiable beneficiaries. The practitioner names who the work serves and returns to that framing when scope drifts. What holds the rating at E rather than H: the connection between stated purpose and production decisions is present but not yet structural. Purpose informs the work; it does not yet constrain it.</div>
+          <div class="gen-block b-hr" data-d="2900"></div>
+          <div class="gen-block b-h2" data-d="3020">Domain 2 — Planning and Scope</div>
+          <div class="gen-block b-rating" data-d="3120">Rating: Developing · Confidence: High</div>
+          <div class="gen-block b-h3" data-d="3220">2a — Knowing What Done Looks Like</div>
+          <div class="gen-block b-p" data-d="3340">Goals exist but scope and success criteria shift during production. Sessions begin with intent but the definition of done moves as the work reveals complexity. The pattern is not absence of planning but planning that does not hold under contact with the work.<span class="gen-cursor" id="genCursor"></span></div>
         </div>
       </div>
       <div class="chat-input-bar">
-        <span class="chat-input-text">Message...</span>
+        <div class="chat-input-field"><span class="chat-input-placeholder">Message...</span></div>
       </div>
     </div>
 
@@ -657,65 +666,159 @@ function doCopy() {
   } else { fallback(); }
 }
 
-// Animation
+// Elements
+var cursorEl = document.getElementById('cursorEl');
+var ctxMenu = document.getElementById('ctxMenu');
+var winSite = document.getElementById('winSite');
+var winChat = document.getElementById('winChat');
 var siteBtn = document.getElementById('siteBtn');
+var chatTitle = document.getElementById('chatTitle');
 var userBubble = document.getElementById('userBubble');
-var aiResponse = document.getElementById('aiResponse');
+var thinkLine = document.getElementById('thinkLine');
+var thinkText = document.getElementById('thinkText');
+var thinkCursor = document.getElementById('thinkCursor');
 var genCursor = document.getElementById('genCursor');
 var blocks = document.querySelectorAll('.gen-block');
 
+var thinkMessages = [
+  "I will review collaboration history and provide a thorough assessment of your capacity as an AI practitioner and as a co-intelligent human.",
+  "No data gets sent. Confirming the full instruction and framework is already in the prompt.",
+  "Assessing growth between May 2025 to May 2026...",
+  "OK I have an abundance of evidence and can begin scoring and create for Asa his co-intelligence readiness report."
+];
+
 function resetAll() {
-  siteBtn.classList.remove('flash');
+  cursorEl.classList.remove('show');
+  cursorEl.style.cssText = 'opacity:0;';
+  ctxMenu.classList.remove('show');
+  ctxMenu.style.cssText = '';
+  winSite.classList.remove('behind');
+  winChat.classList.remove('show');
+  siteBtn.textContent = 'Copy prompt';
+  siteBtn.classList.remove('copied-state');
+  chatTitle.textContent = 'New conversation';
+  chatTitle.classList.remove('active');
   userBubble.classList.remove('show');
-  aiResponse.classList.remove('show');
-  genCursor.style.display = 'inline-block';
+  thinkLine.classList.remove('show');
+  thinkText.textContent = '';
+  genCursor.classList.remove('show');
   blocks.forEach(function(b) { b.classList.remove('show'); });
+}
+
+function moveCursor(x, y, dur) {
+  cursorEl.style.transition = 'left ' + dur + 'ms ease, top ' + dur + 'ms ease, opacity 0.25s ease';
+  cursorEl.style.left = x + 'px';
+  cursorEl.style.top = y + 'px';
+}
+
+function showThinkMessage(index, callback) {
+  thinkText.textContent = thinkMessages[index];
+  setTimeout(callback, 2200);
+}
+
+function runThinkSequence(index, onDone) {
+  if (index >= thinkMessages.length) {
+    onDone();
+    return;
+  }
+  thinkText.textContent = '';
+  setTimeout(function() {
+    thinkText.textContent = thinkMessages[index];
+    setTimeout(function() {
+      runThinkSequence(index + 1, onDone);
+    }, index === thinkMessages.length - 1 ? 1800 : 2000);
+  }, 300);
 }
 
 function runSequence() {
   resetAll();
 
-  // 0.6s: button flashes "Copied"
-  setTimeout(function() { siteBtn.classList.add('flash'); }, 600);
-  // 1.4s: button resets
-  setTimeout(function() { siteBtn.classList.remove('flash'); }, 1400);
+  var sceneRect = document.querySelector('.card-right').getBoundingClientRect();
 
-  // 1.8s: user bubble appears
-  setTimeout(function() { userBubble.classList.add('show'); }, 1800);
-
-  // 2.8s: AI response area shows
-  setTimeout(function() { aiResponse.classList.add('show'); }, 2800);
-
-  // 3s+: blocks appear one by one based on data-delay
-  blocks.forEach(function(block) {
-    var delay = parseInt(block.getAttribute('data-delay'), 10);
-    setTimeout(function() { block.classList.add('show'); }, 3000 + delay);
-  });
-
-  // After last block, hide cursor
-  var lastDelay = 0;
-  blocks.forEach(function(b) {
-    var d = parseInt(b.getAttribute('data-delay'), 10);
-    if (d > lastDelay) lastDelay = d;
-  });
+  // Phase 1: Cursor appears, moves to site button
   setTimeout(function() {
-    genCursor.style.display = 'none';
-  }, 3000 + lastDelay + 2000);
+    cursorEl.style.left = '30%';
+    cursorEl.style.top = '45%';
+    cursorEl.classList.add('show');
+    cursorEl.style.opacity = '1';
+  }, 400);
+
+  setTimeout(function() {
+    moveCursor(winSite.offsetLeft + 80, winSite.offsetTop + 130, 500);
+  }, 800);
+
+  // Phase 2: Click button
+  setTimeout(function() {
+    siteBtn.classList.add('copied-state');
+    siteBtn.textContent = 'Prompt copied \u2014 now paste into your AI';
+  }, 1500);
+
+  // Phase 3: Chat window appears, site goes behind
+  setTimeout(function() {
+    winChat.classList.add('show');
+    winSite.classList.add('behind');
+  }, 2200);
+
+  // Phase 4: Cursor moves to chat input area, right-click
+  setTimeout(function() {
+    var chatRect = winChat;
+    moveCursor(chatRect.offsetLeft + chatRect.offsetWidth * 0.5, chatRect.offsetTop + chatRect.offsetHeight - 50, 400);
+  }, 2800);
+
+  setTimeout(function() {
+    ctxMenu.style.left = (winChat.offsetLeft + winChat.offsetWidth * 0.45) + 'px';
+    ctxMenu.style.top = (winChat.offsetTop + winChat.offsetHeight - 70) + 'px';
+    ctxMenu.classList.add('show');
+  }, 3400);
+
+  // Phase 5: Click paste, hide menu and cursor
+  setTimeout(function() {
+    ctxMenu.classList.remove('show');
+    cursorEl.style.opacity = '0';
+  }, 4000);
+
+  // Phase 6: User bubble
+  setTimeout(function() { userBubble.classList.add('show'); }, 4400);
+
+  // Phase 7: Thinking sequence
+  setTimeout(function() {
+    thinkLine.classList.add('show');
+    runThinkSequence(0, function() {
+      // Phase 8: Title updates
+      chatTitle.textContent = 'Co-Intelligence Readiness Assessment Report for My Human Collaborator';
+      chatTitle.classList.add('active');
+
+      // Phase 9: Thinking disappears, report generates
+      setTimeout(function() {
+        thinkLine.classList.remove('show');
+        genCursor.classList.add('show');
+
+        blocks.forEach(function(block) {
+          var delay = parseInt(block.getAttribute('data-d'), 10);
+          setTimeout(function() { block.classList.add('show'); }, delay);
+        });
+
+        // Hide gen cursor after last block
+        var maxDelay = 0;
+        blocks.forEach(function(b) {
+          var d = parseInt(b.getAttribute('data-d'), 10);
+          if (d > maxDelay) maxDelay = d;
+        });
+        setTimeout(function() { genCursor.classList.remove('show'); }, maxDelay + 2500);
+      }, 600);
+    });
+  }, 5200);
 }
 
-// First play on scroll
+// First play
 var played = false;
-var cardRight = document.querySelector('.card-right');
 var obs = new IntersectionObserver(function(entries) {
-  if (entries[0].isIntersecting && !played) {
-    played = true;
-    runSequence();
-  }
+  if (entries[0].isIntersecting && !played) { played = true; runSequence(); }
 }, { threshold: 0.3 });
-obs.observe(cardRight);
+obs.observe(document.querySelector('.card-right'));
 
 // Replay on hover
-cardRight.addEventListener('mouseenter', function() {
+document.querySelector('.card-right').addEventListener('mouseenter', function() {
   if (played) runSequence();
 });
 
